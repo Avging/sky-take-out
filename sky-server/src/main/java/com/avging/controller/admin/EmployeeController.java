@@ -1,6 +1,7 @@
 package com.avging.controller.admin;
 
 import com.avging.constant.JwtClaimsConstant;
+import com.avging.dto.EmployeeDTO;
 import com.avging.dto.EmployeeLoginDTO;
 import com.avging.entity.Employee;
 import com.avging.properties.JwtProperties;
@@ -73,6 +74,14 @@ public class EmployeeController {
     @PostMapping("/logout")
     @ApiOperation("员工退出")//这里属性可以省略，直接写值
     public Result<String> logout() {
+        return Result.success();
+    }
+
+    @PostMapping
+    @ApiOperation("新增员工")
+    public Result save(@RequestBody EmployeeDTO employeeDTO){
+        log.info("新增员工：{}",employeeDTO);
+        employeeService.save(employeeDTO);
         return Result.success();
     }
 

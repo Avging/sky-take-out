@@ -1,5 +1,6 @@
 package com.avging.service;
 
+import com.avging.dto.EmployeeDTO;
 import com.avging.dto.EmployeeLoginDTO;
 import com.avging.entity.Employee;
 import com.avging.exception.AccountLockedException;
@@ -14,4 +15,7 @@ public interface EmployeeService {
      */
     Employee login(EmployeeLoginDTO employeeLoginDTO) throws AccountLockedException, AccountNotFoundException;
 
+    //新增员工
+
+    void save(EmployeeDTO employeeDTO);
 }
