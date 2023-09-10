@@ -3,6 +3,7 @@ package com.avging.service.impl;
 import com.avging.constant.MessageConstant;
 import com.avging.constant.PasswordConstant;
 import com.avging.constant.StatusConstant;
+import com.avging.context.BaseContext;
 import com.avging.dto.EmployeeDTO;
 import com.avging.dto.EmployeeLoginDTO;
 import com.avging.entity.Employee;
@@ -62,6 +63,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     //新增员工
     public void save(EmployeeDTO employeeDTO) {
+        System.out.println("当前线程的id:" + Thread.currentThread().getId());
         Employee employee = new Employee();
 
         //对象属性拷贝
@@ -79,8 +81,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 
         //设置当前记录创建人id和修改人id
         // TODO 后期需要改为当前登录用户的id
-        employee.setCreateUser(10L);
-        employee.setUpdateUser(10L);
+        employee.setCreateUser(BaseContext.getCurrentId());
+        employee.setUpdateUser(BaseContext.getCurrentId());
 
         employeeMapper.insert(employee);
     }
