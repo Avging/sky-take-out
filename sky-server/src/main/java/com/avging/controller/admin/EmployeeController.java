@@ -3,8 +3,10 @@ package com.avging.controller.admin;
 import com.avging.constant.JwtClaimsConstant;
 import com.avging.dto.EmployeeDTO;
 import com.avging.dto.EmployeeLoginDTO;
+import com.avging.dto.EmployeePageQueryDTO;
 import com.avging.entity.Employee;
 import com.avging.properties.JwtProperties;
+import com.avging.result.PageResult;
 import com.avging.result.Result;
 import com.avging.service.EmployeeService;
 import com.avging.utils.JwtUtil;
@@ -13,10 +15,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -85,6 +84,14 @@ public class EmployeeController {
 
         employeeService.save(employeeDTO);
         return Result.success();
+    }
+
+    @GetMapping("/page")
+    @ApiOperation("员工分页查询")
+    public Result<PageResult> page(EmployeePageQueryDTO employeePageQueryDTO){
+        log.info("员工分页查询，参数为：{}",employeePageQueryDTO);
+        PageResult pageResult =  employeeService.pageQuery(employeePageQueryDTO);
+        return Result.success(pageResult);
     }
 
 }

@@ -2,9 +2,11 @@ package com.avging.service;
 
 import com.avging.dto.EmployeeDTO;
 import com.avging.dto.EmployeeLoginDTO;
+import com.avging.dto.EmployeePageQueryDTO;
 import com.avging.entity.Employee;
 import com.avging.exception.AccountLockedException;
 import com.avging.exception.AccountNotFoundException;
+import com.avging.result.PageResult;
 
 public interface EmployeeService {
 
@@ -18,4 +20,11 @@ public interface EmployeeService {
     //新增员工
 
     void save(EmployeeDTO employeeDTO);
+
+    /**
+     * 分页查询
+     * @param employeePageQueryDTO
+     * @return
+     */
+    PageResult pageQuery(EmployeePageQueryDTO employeePageQueryDTO);
 }

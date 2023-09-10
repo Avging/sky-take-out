@@ -6,18 +6,23 @@ import com.avging.constant.StatusConstant;
 import com.avging.context.BaseContext;
 import com.avging.dto.EmployeeDTO;
 import com.avging.dto.EmployeeLoginDTO;
+import com.avging.dto.EmployeePageQueryDTO;
 import com.avging.entity.Employee;
 import com.avging.exception.AccountLockedException;
 import com.avging.exception.AccountNotFoundException;
 import com.avging.exception.PasswordErrorException;
 import com.avging.mapper.EmployeeMapper;
+import com.avging.result.PageResult;
 import com.avging.service.EmployeeService;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
@@ -87,4 +92,20 @@ public class EmployeeServiceImpl implements EmployeeService {
         employeeMapper.insert(employee);
     }
 
+    /**
+     * 分页查询
+     * @param employeePageQueryDTO
+     * @return
+     */
+    public PageResult pageQuery(EmployeePageQueryDTO employeePageQueryDTO) {
+        //SELECT * FROM employee limit 0,10
+        //开始分页查询//这个插件底层是基于MyBatis的拦截器，会动态的把limit拼进去，并把两个数据参数动态的计算
+        PageHelper.startPage(employeePageQueryDTO.getPage(),employeePageQueryDTO.getPageSize());//页码和每页的记录数
+        //Page本质上是一个ArrayList集合
+        Page<Employee> page = employeeMapper.pageQuery(employeePageQueryDTO);
+
+        long total = page.getTotal();
+        List<Employee> records = page.getResult();
+        return new PageResult(total,records);
+    }
 }
