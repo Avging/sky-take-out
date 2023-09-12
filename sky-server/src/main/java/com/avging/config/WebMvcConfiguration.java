@@ -1,10 +1,14 @@
 package com.avging.config;
 
 import com.avging.intercaptor.JwtTokenAdminInterceptor;
+import com.avging.json.JacksonObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.http.converter.cbor.MappingJackson2CborHttpMessageConverter;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
@@ -14,6 +18,8 @@ import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.service.ApiInfo;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
+
+import java.util.List;
 
 /**
  * 配置类，注册web层相关组件
@@ -66,5 +72,21 @@ public class WebMvcConfiguration extends WebMvcConfigurationSupport {
         log.info("开始设置静态资源映射...");
         registry.addResourceHandler("/doc.html").addResourceLocations("classpath:/META-INF/resources/");
         registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/");
+    }
+
+
+    /**
+     * 扩展Spring MVC框架的消息转换器
+     * 对后端返回给前端的数据统一进行转换处理
+     * @param converters
+     */
+    protected void extendMessageConverters(List<HttpMessageConverter<?>> converters) {
+        log.info("扩展消息转换器...");
+        //创建一个消息转换器对象,这是自定义的实现类
+        MappingJackson2HttpMessageConverter converter = new MappingJackson2HttpMessageConverter();
+        //需要为消息转换器设置一个对象转换器，对象转换器可以将Java对象序列化为json数据
+        converter.setObjectMapper(new JacksonObjectMapper());//在common模块下的json包下自己创建的对象转换器
+        //将自己的信息转换器加入容器中
+        converters.add(0,converter);//因为容器中有很多转换器，要想我们自己写的转换器排在第一个，可以加个0索引
     }
 }
