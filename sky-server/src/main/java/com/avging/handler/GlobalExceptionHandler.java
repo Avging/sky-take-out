@@ -18,18 +18,23 @@ public class GlobalExceptionHandler {
 
     /**
      * 捕获业务异常
-     * @param ex
-     * @return
+     * @param ex BaseException
+     * @return Result<Object>
      */
     @ExceptionHandler
-    public Result exceptionHandler(BaseException ex){
+    public Result<Object> exceptionHandler(BaseException ex){
         log.error("异常信息：{}", ex.getMessage());
         return Result.error(ex.getMessage());
     }
 
 
+    /**
+     * 在前端发送请求时数据库返回来的错误
+     * @param ex SQLIntegrityConstraintViolationException
+     * @return Result<Object>
+     */
     @ExceptionHandler
-    public Result exceptionHandler(SQLIntegrityConstraintViolationException ex){
+    public Result<Object> exceptionHandler(SQLIntegrityConstraintViolationException ex){
         //Duplicate entry 'zhangsan' for key 'employee.username'
         String message = ex.getMessage();
         if (message.contains("Duplicate entry")){

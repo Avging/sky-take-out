@@ -14,9 +14,9 @@ import com.avging.vo.EmployeeLoginVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -29,28 +29,29 @@ import java.util.Map;
 @Api(tags = "员工相关接口")
 public class EmployeeController {
 
-    @Autowired
+    @Resource
     private EmployeeService employeeService;
-    @Autowired
+    @Resource
     private JwtProperties jwtProperties;
 
     /**
-     * 登录
-     *
-     * @param employeeLoginDTO
-     * @return
+     * 员工登录
+     * @param employeeLoginDTO EmployeeLoginDTO
+     * @return Result<EmployeeLoginVO>
      */
     @PostMapping("/login")
     @ApiOperation(value = "员工登录")
     public Result<EmployeeLoginVO> login(@RequestBody EmployeeLoginDTO employeeLoginDTO) {
-        log.info("员工登录：{}", employeeLoginDTO);  //来源于@Slf4j
+        //来源于@Slf4j
+        log.info("员工登录：{}", employeeLoginDTO);
 
         Employee employee = employeeService.login(employeeLoginDTO);
 
         //登录成功后，生成jwt令牌
         Map<String, Object> claims = new HashMap<>();
         claims.put(JwtClaimsConstant.EMP_ID, employee.getId());
-        String token = JwtUtil.createJWT(  //token生产时传入的参数是从jwtProperties对象中获取的，JwtProperties是配置属性类（封装了配置文件中的配置项），这样就可以灵活获取数据
+        //token生产时传入的参数是从jwtProperties对象中获取的，JwtProperties是配置属性类（封装了配置文件中的配置项），这样就可以灵活获取数据
+        String token = JwtUtil.createJWT(
                 jwtProperties.getAdminSecretKey(),
                 jwtProperties.getAdminTtl(),
                 claims);
@@ -65,20 +66,17 @@ public class EmployeeController {
         return Result.success(employeeLoginVO);
     }
 
-    /**
-     * 退出
-     *
-     * @return
-     */
+
     @PostMapping("/logout")
-    @ApiOperation("员工退出")//这里属性可以省略，直接写值
+    //这里属性可以省略，直接写值
+    @ApiOperation("员工退出")
     public Result<String> logout() {
         return Result.success();
     }
 
     @PostMapping
     @ApiOperation("新增员工")
-    public Result save(@RequestBody EmployeeDTO employeeDTO){
+    public Result<Object> save(@RequestBody EmployeeDTO employeeDTO){
         log.info("新增员工：{}",employeeDTO);
 
         employeeService.save(employeeDTO);
@@ -95,7 +93,7 @@ public class EmployeeController {
 
     @PostMapping("/status/{status}")
     @ApiOperation("启用禁用员工账号")
-    public Result startOrStop(@PathVariable Integer status,Long id){
+    public Result<Object> startOrStop(@PathVariable Integer status,Long id){
         log.info("启用禁用员工账号：{},{}",status,id);
         employeeService.startOrStop(status,id);
         return Result.success();
@@ -112,7 +110,7 @@ public class EmployeeController {
 
     @PutMapping
     @ApiOperation("编辑员工信息")
-    public Result update(@RequestBody EmployeeDTO employeeDTO){
+    public Result<Object> update(@RequestBody EmployeeDTO employeeDTO){
         log.info("编辑员工信息：{}",employeeDTO);
         employeeService.update(employeeDTO);
         return Result.success();

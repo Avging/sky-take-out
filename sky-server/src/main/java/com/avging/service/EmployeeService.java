@@ -12,39 +12,39 @@ public interface EmployeeService {
 
     /**
      * 员工登录
-     * @param employeeLoginDTO
-     * @return
+     * @param employeeLoginDTO EmployeeLoginDTO
+     * @return Employee
      */
     Employee login(EmployeeLoginDTO employeeLoginDTO) throws AccountLockedException, AccountNotFoundException;
 
-    //新增员工
 
+    //新增员工
     void save(EmployeeDTO employeeDTO);
 
     /**
      * 分页查询
-     * @param employeePageQueryDTO
-     * @return
+     * @param  employeePageQueryDTO EmployeePageQueryDTO
+     * @return PageResult
      */
     PageResult pageQuery(EmployeePageQueryDTO employeePageQueryDTO);
 
     /**
      * 启用禁用员工账号
-     * @param status
-     * @param id
+     * @param status Integer
+     * @param id Long
      */
     void startOrStop(Integer status, Long id);
 
     /**
      * 根据id查询员工信息
-     * @param id
-     * @return
+     * @param id Long
+     * @return Employee
      */
     Employee getById(Long id);
 
     /**
      * 编辑员工信息
-     * @param employeeDTO
+     * @param employeeDTO EmployeeDTO
      */
     void update(EmployeeDTO employeeDTO);
 }

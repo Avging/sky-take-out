@@ -17,24 +17,24 @@ import com.avging.service.EmployeeService;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
 
+import javax.annotation.Resource;
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
 
-    @Autowired
+    @Resource
     private EmployeeMapper employeeMapper;
 
     /**
      * 员工登录
-     *
-     * @param employeeLoginDTO
-     * @return
+     * @param employeeLoginDTO EmployeeLoginDTO
+     * @return Employee
      */
     public Employee login(EmployeeLoginDTO employeeLoginDTO) throws AccountLockedException, AccountNotFoundException {
         String username = employeeLoginDTO.getUsername();
@@ -46,7 +46,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         //2、处理各种异常情况（用户名不存在、密码不对、账号被锁定）
         if (employee == null) {
             //账号不存在
-           // throw new AccountNotFoundException(MessageConstant.ACCOUNT_NOT_FOUND);
+            throw new AccountNotFoundException(MessageConstant.ACCOUNT_NOT_FOUND);
         }
 
         //密码比对
@@ -94,8 +94,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     /**
      * 分页查询
-     * @param employeePageQueryDTO
-     * @return
+     * @param employeePageQueryDTO EmployeePageQueryDTO
+     * @return PageResult
      */
     public PageResult pageQuery(EmployeePageQueryDTO employeePageQueryDTO) {
         //SELECT * FROM employee limit 0,10
@@ -112,13 +112,13 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     /**
      * 启用禁用员工账号
-     * @param status
-     * @param id
+     * @param status Integer
+     * @param id Long
      */
     public void startOrStop(Integer status, Long id) {
         // update employee set status = ? where id = ?
 
-//        Employee employee = new Employee();
+//       Employee employee = new Employee();
 //        employee.setStatus(status);
 //        employee.setId(id);
         Employee employee = Employee.builder()
@@ -131,8 +131,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     /**
      * 根据id查询员工信息
-     * @param id
-     * @return
+     * @param id Long
+     * @return Employee
      */
     public Employee getById(Long id) {
         Employee employee = employeeMapper.getById(id);
@@ -143,7 +143,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     /**
      * 编辑员工信息
-     * @param employeeDTO
+     * @param employeeDTO EmployeeDTO
      */
     public void update(EmployeeDTO employeeDTO) {
         Employee employee = new Employee();
