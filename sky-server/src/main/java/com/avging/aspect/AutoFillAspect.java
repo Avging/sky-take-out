@@ -24,7 +24,7 @@ import java.time.LocalDateTime;
 @Slf4j
 public class AutoFillAspect {
 
-    //切入点//拦截在mapper包下，有AutoFill注解的方法
+    //切入点//拦截在mapper包下，且有AutoFill注解的方法
     @Pointcut("execution(* com.avging.mapper.*.*(..)) && @annotation(com.avging.annotation.AutoFill)")
     public void autoFillPointCut(){}
 
@@ -35,6 +35,7 @@ public class AutoFillAspect {
 
         //获取到当前被拦截的方法上的数据库操作类型
         //方法签名对象
+        //MethodSignature 可以理解为拦截到的具体某个方法
         MethodSignature signature = (MethodSignature)joinPoint.getSignature();
         //获得方法上的注解对象
         AutoFill autoFill = signature.getMethod().getAnnotation(AutoFill.class);
@@ -47,6 +48,7 @@ public class AutoFillAspect {
             return;
         }
         //因为参数类型不一致，所以用Object类型接收
+        //需要处理的是第一个参数，这个必须确保所有的insert和update的第一个参数是对应的实体类
         Object entity = args[0];
 
         //准备赋值的数据
@@ -57,14 +59,14 @@ public class AutoFillAspect {
         if (operationType == OperationType.INSERT){
             //为4个公共字段赋值
             try {
-                //创建对象的set方法
+                //通过对象获取它的Class，然后获取它的set方法对象，然后给这个对象赋值
                 Method setCreateTime = entity.getClass().getDeclaredMethod(AutoFillConstant.SET_CREATE_TIME, LocalDateTime.class);
                 Method setCreateUser = entity.getClass().getDeclaredMethod(AutoFillConstant.SET_CREATE_USER, Long.class);
                 Method setUpdateTime = entity.getClass().getDeclaredMethod(AutoFillConstant.SET_UPDATE_TIME, LocalDateTime.class);
                 Method setUpdateUser = entity.getClass().getDeclaredMethod(AutoFillConstant.SET_UPDATE_USER, Long.class);
 
                 //通过反射为对象属性赋值
-                setCreateTime.invoke(entity, now);
+                setCreateTime.invoke(entity,now);
                 setCreateUser.invoke(entity,currentId);
                 setUpdateTime.invoke(entity,now);
                 setUpdateUser.invoke(entity,currentId);
