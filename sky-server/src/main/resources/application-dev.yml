@@ -1,4 +1,4 @@
-avging:
+sky:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     host: 127.0.0.1
@@ -6,3 +6,8 @@ avging:
     database: sky_take_out
     username: root
     password: 123456
+  alioss:
+    endpoint: oss-cn-beijing.aliyuncs.com
+    access-key-id: LTAI5t9yGQ9ZeEF3P58qBkus
+    access-key-secret: bZJDW2qgDqgcjiUKdReZxLCAnK4UFL
+    bucket-name: sky-avging
