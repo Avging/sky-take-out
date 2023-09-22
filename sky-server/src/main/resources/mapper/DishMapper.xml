@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.avging.mapper.DishMapper">
+<!--    useGeneratedKeys="true" 获得插入数据所生成的主键值，keyProperty="id" 把返回的主键值赋给dish类的id，后续返回到业务层实现类中可以通过get获取这个主键值-->
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO dish (name,category_Id,price,image,description,create_time,update_time,create_user,update_user,status)
+            VALUES
+        (#{name},#{categoryId},#{price},#{image},#{description},#{createTime},#{updateTime},#{createUser},#{updateUser},#{status})
+    </insert>
+
+</mapper>
