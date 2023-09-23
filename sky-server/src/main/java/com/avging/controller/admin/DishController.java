@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
  * 菜品管理
  */
 @RestController
-@RequestMapping("/admin")
-@Api("菜品管理相关接口")
+@RequestMapping("/admin/dish")
+@Api(tags = "菜品管理相关接口")
 @Slf4j
 public class DishController {
     @Autowired
@@ -28,7 +28,7 @@ public class DishController {
      * @param dishDTO
      * @return
      */
-    @PostMapping("/save")
+    @PostMapping
     @ApiOperation("新增菜品")
     public Result<Object> save(@RequestBody DishDTO dishDTO){
         log.info("新增菜品：{}",dishDTO);
