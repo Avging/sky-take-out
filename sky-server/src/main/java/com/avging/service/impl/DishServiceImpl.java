@@ -1,11 +1,16 @@
 package com.avging.service.impl;
 
 import com.avging.dto.DishDTO;
+import com.avging.dto.DishPageQueryDTO;
 import com.avging.entity.Dish;
 import com.avging.entity.DishFlavor;
 import com.avging.mapper.DishFlavorMapper;
 import com.avging.mapper.DishMapper;
+import com.avging.result.PageResult;
 import com.avging.service.DishService;
+import com.avging.vo.DishVO;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,5 +58,16 @@ public class DishServiceImpl implements DishService {
             dishFlavorMapper.insertBatch(flavors);
         }
 
+    }
+
+    /**
+     * 菜品分页查询
+     * @param dishPageQueryDTO  dishPageQueryDTO
+     * @return PageResult
+     */
+    public PageResult pageQuerry(DishPageQueryDTO dishPageQueryDTO) {
+        PageHelper.startPage(dishPageQueryDTO.getPage(),dishPageQueryDTO.getPageSize());
+        Page<DishVO> page = dishMapper.pageQuery(dishPageQueryDTO);
+        return new PageResult(page.getTotal(),page.getResult());
     }
 }

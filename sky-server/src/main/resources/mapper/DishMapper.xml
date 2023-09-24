@@ -9,4 +9,21 @@
         (#{name},#{categoryId},#{price},#{image},#{description},#{createTime},#{updateTime},#{createUser},#{updateUser},#{status})
     </insert>
 
+    <!--concat('%',#(name),'%') mysql的字符串连接函数-->
+    <select id="pageQuery" resultType="com.avging.vo.DishVO">
+        SELECT d.*,c.name AS categoryName FROM dish d LEFT OUTER JOIN category c ON d.category_id = c.id
+        <where>
+            <if test="name != null">
+                AND d.name LIKE concat('%',#(name),'%')
+            </if>
+            <if test="categoryId != null">
+                AND d.category_id = #{category}
+            </if>
+            <if test="status != null">
+                AND d.status = #{status}
+            </if>
+        </where>
+        ORDER BY d.create_time DESC
+    </select>
+
 </mapper>
