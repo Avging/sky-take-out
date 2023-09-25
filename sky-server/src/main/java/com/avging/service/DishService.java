@@ -4,6 +4,8 @@ import com.avging.dto.DishDTO;
 import com.avging.dto.DishPageQueryDTO;
 import com.avging.result.PageResult;
 
+import java.util.List;
+
 public interface DishService {
 
     /**
@@ -18,4 +20,10 @@ public interface DishService {
      * @return PageResult
      */
     PageResult pageQuerry(DishPageQueryDTO dishPageQueryDTO);
+
+    /**
+     * 菜品
+     * @param ids List<Long>
+     */
+    void deleteBatch(List<Long> ids);
 }
