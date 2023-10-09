@@ -3,6 +3,7 @@ package com.avging.service;
 import com.avging.dto.DishDTO;
 import com.avging.dto.DishPageQueryDTO;
 import com.avging.result.PageResult;
+import com.avging.vo.DishVO;
 
 import java.util.List;
 
@@ -26,4 +27,18 @@ public interface DishService {
      * @param ids List<Long>
      */
     void deleteBatch(List<Long> ids);
+
+
+    /**
+     * 根据id查询菜品和对应的口味数据
+     * @param id Long
+     * @return DishVo
+     */
+    DishVO getByIdWithFlavor(Long id);
+
+    /**
+     * 根据id修改菜品基本信息和对应的口味信息
+     * @param dishDTO DishDTO
+     */
+    void updateWithFlovor(DishDTO dishDTO);
 }

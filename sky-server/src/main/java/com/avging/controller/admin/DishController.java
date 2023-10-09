@@ -5,6 +5,7 @@ import com.avging.dto.DishPageQueryDTO;
 import com.avging.result.PageResult;
 import com.avging.result.Result;
 import com.avging.service.DishService;
+import com.avging.vo.DishVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -53,6 +54,34 @@ public class DishController {
     public Result<Object> delete(@RequestParam List<Long> ids){
         log.info("菜品批量删除：{}",ids);
         dishService.deleteBatch(ids);
+        return Result.success();
+    }
+
+
+    /**
+     * 根据id查询菜品
+     * @param id Long
+     * @return DishVo
+     */
+    @GetMapping("/{id}")
+    @ApiOperation("根据id查询菜品")
+    public Result<DishVO> getById(@PathVariable Long id){
+        log.info("根据id查询菜品：{}",id);
+        DishVO dishVO = dishService.getByIdWithFlavor(id);
+        return Result.success(dishVO);
+    }
+
+
+    /**
+     * 修改菜品
+     * @param dishDTO DishDTO
+     * @return Result<Object>
+     */
+    @PutMapping
+    @ApiOperation("修改菜品")
+    public Result<Object> update(@RequestBody DishDTO dishDTO){
+        log.info("修改菜品：{}",dishDTO);
+        dishService.updateWithFlovor(dishDTO);
         return Result.success();
     }
 }
