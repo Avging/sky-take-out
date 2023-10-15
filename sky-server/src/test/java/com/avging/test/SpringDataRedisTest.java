@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import org.springframework.data.redis.connection.DataType;
 import org.springframework.data.redis.core.*;
 
 import java.util.List;
@@ -130,4 +131,24 @@ public class SpringDataRedisTest {
         zSetOperations.remove("zset1","a","b");
     }
 
+
+    /**
+     * 通用命令操作
+     */
+    @Test
+    public void testCommon(){
+        //keys exists type del
+        Set keys = redisTemplate.keys("*");
+        System.out.println(keys);
+
+        Boolean name = redisTemplate.hasKey("name");
+        Boolean set1 = redisTemplate.hasKey("set1");
+
+        for(Object key : keys){
+            DataType type = redisTemplate.type(key);
+            System.out.println(type.name());
+        }
+
+        redisTemplate.delete("mylist");
+    }
 }
