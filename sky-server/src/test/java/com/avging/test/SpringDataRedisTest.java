@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import org.springframework.data.redis.core.HashOperations;
+import org.springframework.data.redis.core.ListOperations;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.SetOperations;
 
 import java.util.List;
 import java.util.Set;
@@ -62,4 +64,55 @@ public class SpringDataRedisTest {
         hashOperations.delete("100","age");
 
     }
+
+
+    /**
+     * 操作列表类型的数据
+     */
+    @Test
+    public void testList(){
+        //lpush lrange rpop llen
+        ListOperations listOperations = redisTemplate.opsForList();
+
+        listOperations.leftPushAll("mylist","a","b","c");
+        listOperations.leftPush("mylist","d");
+
+        List mylist = listOperations.range("mylist", 0, -1);
+        System.out.println(mylist);
+
+        listOperations.rightPop("mylist");
+
+        Long size = listOperations.size("mylist");
+        System.out.println(size);
+
+    }
+
+
+    /**
+     * 操作集合类型的数据
+     */
+    @Test
+    public void testSet(){
+        //sadd smembers scard sinter sunion srem
+        SetOperations setOperations = redisTemplate.opsForSet();
+
+        setOperations.add("set1","a","b","c","d");
+        setOperations.add("set2","a","b","x","y");
+
+        Set members = setOperations.members("set1");
+        System.out.println(members);
+
+        Long size = setOperations.size("set1");
+        System.out.println(size);
+
+        Set intersect = setOperations.intersect("set1", "set2");
+        System.out.println(intersect);
+
+        Set union = setOperations.union("set1", "set2");
+        System.out.println(union);
+
+        setOperations.remove("set1","a","b");
+
+    }
+
 }
