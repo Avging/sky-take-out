@@ -5,10 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import org.springframework.data.redis.core.HashOperations;
-import org.springframework.data.redis.core.ListOperations;
-import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.core.SetOperations;
+import org.springframework.data.redis.core.*;
 
 import java.util.List;
 import java.util.Set;
@@ -112,7 +109,25 @@ public class SpringDataRedisTest {
         System.out.println(union);
 
         setOperations.remove("set1","a","b");
+    }
 
+
+    /**
+     * 操作有序集合类型的数据
+     */
+    @Test
+    public void testZset(){
+       //zadd zrange zincrby zrem
+        ZSetOperations zSetOperations = redisTemplate.opsForZSet();
+        zSetOperations.add("zset1","a",10);
+        zSetOperations.add("zset1","b",12);
+        zSetOperations.add("zset1","c",9);
+
+        Set zset1 = zSetOperations.range("zset1", 0, -1);
+        System.out.println(zset1);
+
+        zSetOperations.incrementScore("zset1","c",10);
+        zSetOperations.remove("zset1","a","b");
     }
 
 }
