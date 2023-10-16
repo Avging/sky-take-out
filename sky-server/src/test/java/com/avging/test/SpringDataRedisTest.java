@@ -12,7 +12,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
-@SpringBootTest
+//先把测试类注释掉，避免影响启动速度
+//@SpringBootTest
 public class SpringDataRedisTest {
 
     @Autowired
