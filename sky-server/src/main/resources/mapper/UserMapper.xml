@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.avging.mapper.UserMapper">
+<!--    useGeneratedKeys="true" 获得插入数据所生成的主键值，keyProperty="id" 把返回的主键值赋给user类的id，后续返回到业务层实现类中可以通过get获取这个主键值-->
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO user (openid,name,phone,sex,id_number,avatar,create_time)
+            VALUES (#{openid},#{name},#{phone},#{sex},#{idNumber},#{avatar},#{createTime})
+    </insert>
+
+</mapper>
