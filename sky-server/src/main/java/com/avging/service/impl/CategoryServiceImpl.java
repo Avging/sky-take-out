@@ -4,7 +4,6 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.avging.constant.MessageConstant;
 import com.avging.constant.StatusConstant;
-import com.avging.context.BaseContext;
 import com.avging.dto.CategoryDTO;
 import com.avging.dto.CategoryPageQueryDTO;
 import com.avging.entity.Category;

@@ -9,6 +9,22 @@
         (#{name},#{categoryId},#{price},#{image},#{description},#{createTime},#{updateTime},#{createUser},#{updateUser},#{status})
     </insert>
 
+    <select id="list" resultType="Dish" parameterType="Dish">
+        select * from dish
+        <where>
+            <if test="name != null">
+                and name like concat('%',#{name},'%')
+            </if>
+            <if test="categoryId != null">
+                and category_id = #{categoryId}
+            </if>
+            <if test="status != null">
+                and status = #{status}
+            </if>
+        </where>
+        order by create_time desc
+    </select>
+
     <!--concat('%',#(name),'%') mysql的字符串连接函数-->
     <select id="pageQuery" resultType="com.avging.vo.DishVO">
         SELECT d.*,c.name AS categoryName FROM dish d LEFT OUTER JOIN category c ON d.category_id = c.id

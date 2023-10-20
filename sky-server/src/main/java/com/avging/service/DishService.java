@@ -2,6 +2,7 @@ package com.avging.service;
 
 import com.avging.dto.DishDTO;
 import com.avging.dto.DishPageQueryDTO;
+import com.avging.entity.Dish;
 import com.avging.result.PageResult;
 import com.avging.vo.DishVO;
 
@@ -41,4 +42,18 @@ public interface DishService {
      * @param dishDTO DishDTO
      */
     void updateWithFlovor(DishDTO dishDTO);
+
+    /**
+     * 根据分类id查询菜品
+     * @param categoryId
+     * @return
+     */
+    List<Dish> list(Long categoryId);
+
+    /**
+     * 条件查询菜品和口味
+     * @param dish
+     * @return
+     */
+    List<DishVO> listWithFlavor(Dish dish);
 }
