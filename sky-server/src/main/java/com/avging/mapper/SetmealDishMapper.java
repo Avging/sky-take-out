@@ -1,5 +1,6 @@
 package com.avging.mapper;
 
+import com.avging.entity.Setmeal;
 import com.avging.entity.SetmealDish;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Mapper;
@@ -39,4 +40,5 @@ public interface SetmealDishMapper {
      */
     @Select("select * from setmeal_dish where setmeal_id = #{setmealId}")
     List<SetmealDish> getBySetmealId(Long setmealId);
+
 }

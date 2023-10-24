@@ -137,7 +137,7 @@ public class SetmealServiceImpl implements SetmealService {
     /**
      * 修改套餐
      *
-     * @param setmealDTO
+     * @param setmealDTO SetmealDTO
      */
     @Transactional
     public void update(SetmealDTO setmealDTO) {
