@@ -17,7 +17,7 @@ public interface ShoppingCartService {
      * 查看购物车
      * @return
      */
-    List<ShoppingCart> showShoppingCart();
+    //List<ShoppingCart> showShoppingCart();
 
     /**
      * 清空购物车

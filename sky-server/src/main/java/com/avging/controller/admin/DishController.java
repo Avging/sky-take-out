@@ -36,7 +36,6 @@ public class DishController {
      */
     @PostMapping
     @ApiOperation("新增菜品")
-    //TODO
     public Result<Object> save(@RequestBody DishDTO dishDTO){
         log.info("新增菜品：{}",dishDTO);
         dishService.saveWithFlavor(dishDTO);

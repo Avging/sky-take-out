@@ -23,12 +23,12 @@ public class ShoppingCartController {
 
     /**
      * 添加购物车
-     * @param shoppingCartDTO
-     * @return
+     * @param shoppingCartDTO ShoppingCartDTO
+     * @return Result<Object>
      */
     @PostMapping("/add")
     @ApiOperation("添加购物车")
-    public Result add(@RequestBody ShoppingCartDTO shoppingCartDTO){
+    public Result<Object> add(@RequestBody ShoppingCartDTO shoppingCartDTO){
         log.info("添加购物车，商品信息为：{}",shoppingCartDTO);
         shoppingCartService.addShoppingCart(shoppingCartDTO);
         return Result.success();
@@ -36,34 +36,34 @@ public class ShoppingCartController {
 
     /**
      * 查看购物车
-     * @return
+     * @return Result
      */
-    @GetMapping("/list")
-    @ApiOperation("查看购物车")
-    public Result<List<ShoppingCart>> list(){
-        List<ShoppingCart> list = shoppingCartService.showShoppingCart();
-        return Result.success(list);
-    }
+//    @GetMapping("/list")
+//    @ApiOperation("查看购物车")
+//    public Result<List<ShoppingCart>> list(){
+//        List<ShoppingCart> list = shoppingCartService.showShoppingCart();
+//        return Result.success(list);
+//    }
 
     /**
      * 清空购物车
-     * @return
+     * @return Result<Object>
      */
     @DeleteMapping("/clean")
     @ApiOperation("清空购物车")
-    public Result clean(){
+    public Result<Object> clean(){
         shoppingCartService.cleanShoppingCart();
         return Result.success();
     }
 
     /**
      * 删除购物车中一个商品
-     * @param shoppingCartDTO
-     * @return
+     * @param shoppingCartDTO ShoppingCartDTO
+     * @return Result<Object>
      */
     @PostMapping("/sub")
     @ApiOperation("删除购物车中一个商品")
-    public Result sub(@RequestBody ShoppingCartDTO shoppingCartDTO){
+    public Result<Object> sub(@RequestBody ShoppingCartDTO shoppingCartDTO){
         log.info("删除购物车中一个商品，商品：{}", shoppingCartDTO);
         shoppingCartService.subShoppingCart(shoppingCartDTO);
         return Result.success();
