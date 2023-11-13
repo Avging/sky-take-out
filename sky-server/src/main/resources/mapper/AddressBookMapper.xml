@@ -5,7 +5,7 @@
     <select id="list" parameterType="AddressBook" resultType="AddressBook">
         select * from address_book
         <where>
-            <if test="userId != null">
+            <if test="userId != null"> 
                 and user_id = #{userId}
             </if>
             <if test="phone != null">

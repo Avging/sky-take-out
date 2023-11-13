@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="SqlDialectMappings">
+    <file url="PROJECT" dialect="MySQL" />
+  </component>
+  <component name="SqlResolveMappings">
+    <file url="PROJECT" scope="{&quot;node&quot;:{  &quot;@negative&quot;:&quot;1&quot;,  &quot;group&quot;:{   &quot;@kind&quot;:&quot;root&quot;,   &quot;node&quot;:{    &quot;name&quot;:{     &quot;@qname&quot;:&quot;113de706-c277-4dd2-8d87-16f50965372d&quot;    },    &quot;group&quot;:{     &quot;@kind&quot;:&quot;schema&quot;,     &quot;node&quot;:{      &quot;name&quot;:{       &quot;@qname&quot;:&quot;information_schema&quot;      },      &quot;name&quot;:{       &quot;@qname&quot;:&quot;mysql&quot;      },      &quot;name&quot;:{       &quot;@qname&quot;:&quot;performance_schema&quot;      },      &quot;name&quot;:{       &quot;@qname&quot;:&quot;sky_take_out&quot;      },      &quot;name&quot;:{       &quot;@qname&quot;:&quot;spring_cache_demo&quot;      },      &quot;name&quot;:{       &quot;@qname&quot;:&quot;spring_db&quot;      },      &quot;name&quot;:{       &quot;@qname&quot;:&quot;ssm_db&quot;      },      &quot;name&quot;:{       &quot;@qname&quot;:&quot;sys&quot;      }     }    }   }  } }}" />
+  </component>
+</project>
