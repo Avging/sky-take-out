@@ -1,5 +1,6 @@
 package com.avging.service.impl;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.avging.constant.MessageConstant;
 import com.avging.context.BaseContext;
@@ -10,20 +11,21 @@ import com.avging.exception.AccountLockedException;
 import com.avging.exception.OrderBusinessException;
 import com.avging.exception.ShoppingCartBusinessException;
 import com.avging.mapper.*;
-import com.avging.service.AddressBookService;
 import com.avging.service.OrderService;
 import com.avging.utils.WeChatPayUtil;
 import com.avging.vo.OrderPaymentVO;
 import com.avging.vo.OrderSubmitVO;
+import com.avging.websocket.WebSocketServer;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class OrderServiceImpl implements OrderService{
@@ -40,6 +42,9 @@ public class OrderServiceImpl implements OrderService{
     private WeChatPayUtil weChatPayUtil;
     @Autowired
     private UserMapper userMapper;
+    @Autowired
+    WebSocketServer webSocketServer;
+
 
     /**
      * 用户下单
@@ -119,12 +124,14 @@ public class OrderServiceImpl implements OrderService{
         User user = userMapper.getById(userId);
 
         //调用微信支付接口，生成预支付交易单
-        JSONObject jsonObject = weChatPayUtil.pay(
-                ordersPaymentDTO.getOrderNumber(), //商户订单号
-                new BigDecimal(0.01), //支付金额，单位 元
-                "苍穹外卖订单", //商品描述
-                user.getOpenid() //微信用户的openid
-        );
+//        JSONObject jsonObject = weChatPayUtil.pay(
+//                ordersPaymentDTO.getOrderNumber(), //商户订单号
+//                new BigDecimal(0.01), //支付金额，单位 元
+//                "苍穹外卖订单", //商品描述
+//                user.getOpenid() //微信用户的openid
+//        );
+
+        JSONObject jsonObject = new JSONObject();
 
         if (jsonObject.getString("code") != null && jsonObject.getString("code").equals("ORDERPAID")) {
             throw new OrderBusinessException("该订单已支付");
@@ -132,6 +139,7 @@ public class OrderServiceImpl implements OrderService{
 
         OrderPaymentVO vo = jsonObject.toJavaObject(OrderPaymentVO.class);
         vo.setPackageStr(jsonObject.getString("package"));
+        paySuccess(ordersPaymentDTO.getOrderNumber());
 
         return vo;
     }
@@ -155,5 +163,13 @@ public class OrderServiceImpl implements OrderService{
                 .build();
 
         orderMapper.update(orders);
+
+        Map map = new HashMap<>();
+        map.put("type",1);
+        map.put("orderId",ordersDB.getId());
+        map.put("content","订单号：" + outTradeNo);
+
+        String json = JSON.toJSONString(map);
+        webSocketServer.sendToAllClient(json);
     }
 }
