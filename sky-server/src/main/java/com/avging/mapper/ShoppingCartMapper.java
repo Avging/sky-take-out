@@ -52,4 +52,5 @@ public interface ShoppingCartMapper {
      * @param shoppingCartList List<ShoppingCart>
      */
     void insertBatch(List<ShoppingCart> shoppingCartList);
+
 }
