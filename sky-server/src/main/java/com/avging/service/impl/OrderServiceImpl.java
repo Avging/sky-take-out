@@ -468,10 +468,10 @@ public class OrderServiceImpl implements OrderService{
         orderMapper.update(orders);
     }
 
-    @Value("${sky.shop.address}")
+    //@Value("${sky.shop.address}")
     private String shopAddress;
 
-    @Value("${sky.baidu.ak}")
+    //@Value("${sky.baidu.ak}")
     private String ak;
 
 
