@@ -19,3 +19,4 @@ sky:
   wechat:
     appid: wx6950197d4a1368c0
     secret: 96543c26257e08f4826febc068a9eeb4
+    notify-url: http://5700e0ac.r9.cpolar.top

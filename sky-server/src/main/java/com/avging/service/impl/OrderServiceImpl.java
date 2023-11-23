@@ -57,6 +57,7 @@ public class OrderServiceImpl implements OrderService{
     WebSocketServer webSocketServer;
 
 
+
     /**
      * 用户下单
      * @param ordersSubmitDTO OrdersSubmitDTO
@@ -175,13 +176,16 @@ public class OrderServiceImpl implements OrderService{
 
         orderMapper.update(orders);
 
+        //通过websocket向客户端浏览器推送消息
         Map map = new HashMap<>();
-        map.put("type",1);
+        map.put("type",1);//1表示来单提醒 2表示客户催单
         map.put("orderId",ordersDB.getId());
         map.put("content","订单号：" + outTradeNo);
 
         String json = JSON.toJSONString(map);
         webSocketServer.sendToAllClient(json);
+
+
     }
 
 
