@@ -43,7 +43,7 @@ public class WebSocketServer {
     /**
      * 连接关闭调用的方法
      *
-     * @param sid
+     * @param sid String
      */
     @OnClose
     public void onClose(@PathParam("sid") String sid) {
@@ -54,7 +54,7 @@ public class WebSocketServer {
     /**
      * 群发
      *
-     * @param message
+     * @param message String
      */
     public void sendToAllClient(String message) {
         Collection<Session> sessions = sessionMap.values();
