@@ -43,15 +43,15 @@ public interface OrderService {
 
     /**
      * 查询订单详情
-     * @param id
-     * @return
+     * @param id Long
+     * @return OrderVO
      */
     OrderVO details(Long id);
 
 
     /**
      * 用户取消订单
-     * @param id
+     * @param id Long
      */
     void userCancelById(Long id) throws Exception;
 
@@ -59,21 +59,21 @@ public interface OrderService {
     /**
      * 再来一单
      *
-     * @param id
+     * @param id Long
      */
     void repetition(Long id);
 
 
     /**
      * 各个状态的订单数量统计
-     * @return
+     * @return OrderStatisticsVO
      */
     OrderStatisticsVO statistics();
 
     /**
      * 接单
      *
-     * @param ordersConfirmDTO
+     * @param ordersConfirmDTO OrdersConfirmDTO
      */
     void confirm(OrdersConfirmDTO ordersConfirmDTO);
 
@@ -81,7 +81,7 @@ public interface OrderService {
     /**
      * 拒单
      *
-     * @param ordersRejectionDTO
+     * @param ordersRejectionDTO OrdersRejectionDTO
      */
     void rejection(OrdersRejectionDTO ordersRejectionDTO) throws Exception;
 
@@ -89,7 +89,7 @@ public interface OrderService {
     /**
      * 商家取消订单
      *
-     * @param ordersCancelDTO
+     * @param ordersCancelDTO OrdersCancelDTO
      */
     void cancel(OrdersCancelDTO ordersCancelDTO) throws Exception;
 
@@ -97,7 +97,7 @@ public interface OrderService {
     /**
      * 派送订单
      *
-     * @param id
+     * @param id Long
      */
     void delivery(Long id);
 
@@ -105,9 +105,14 @@ public interface OrderService {
     /**
      * 完成订单
      *
-     * @param id
+     * @param id Long
      */
     void complete(Long id);
 
 
+    /**
+     * 客户催单
+     * @param id Long
+     */
+    void reminder(Long id);
 }

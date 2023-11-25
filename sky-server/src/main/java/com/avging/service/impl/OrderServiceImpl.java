@@ -159,7 +159,7 @@ public class OrderServiceImpl implements OrderService{
     /**
      * 支付成功，修改订单状态
      *
-     * @param outTradeNo
+     * @param outTradeNo String
      */
     public void paySuccess(String outTradeNo) {
 
@@ -184,8 +184,6 @@ public class OrderServiceImpl implements OrderService{
 
         String json = JSON.toJSONString(map);
         webSocketServer.sendToAllClient(json);
-
-
     }
 
 
@@ -472,6 +470,8 @@ public class OrderServiceImpl implements OrderService{
         orderMapper.update(orders);
     }
 
+
+
     //@Value("${sky.shop.address}")
     private String shopAddress;
 
@@ -543,5 +543,28 @@ public class OrderServiceImpl implements OrderService{
         }
     }
 
+
+    /**
+     * 客户催单
+     * @param id Long
+     */
+    @Override
+    public void reminder(Long id) {
+        // 根据id查询订单
+        Orders ordersDB = orderMapper.getById(id);
+
+        // 校验订单是否存在，并且状态为4
+        if (ordersDB == null) {
+            throw new OrderBusinessException(MessageConstant.ORDER_STATUS_ERROR);
+        }
+
+        Map map = new HashMap();
+        map.put("type",2);// 1表示来单提醒，2表示客户催单
+        map.put("orderId",id);
+        map.put("content","订单号：" + ordersDB.getNumber());
+
+        webSocketServer.sendToAllClient(JSON.toJSONString(map));
+
+    }
 
 }

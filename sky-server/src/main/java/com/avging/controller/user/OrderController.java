@@ -40,8 +40,8 @@ public class OrderController {
     /**
      * 订单支付
      *
-     * @param ordersPaymentDTO
-     * @return
+     * @param ordersPaymentDTO OrderPaymentVO
+     * @return Result<OrderPaymentVO>
      */
     @PutMapping("/payment")
     @ApiOperation("订单支付")
@@ -56,10 +56,10 @@ public class OrderController {
     /**
      * 历史订单查询
      *
-     * @param page
-     * @param pageSize
+     * @param page int
+     * @param pageSize int
      * @param status   订单状态 1待付款 2待接单 3已接单 4派送中 5已完成 6已取消
-     * @return
+     * @return Result<PageResult>
      */
     @GetMapping("/historyOrders")
     @ApiOperation("历史订单查询")
@@ -71,8 +71,8 @@ public class OrderController {
     /**
      * 查询订单详情
      *
-     * @param id
-     * @return
+     * @param id Long
+     * @return Result<OrderVO>
      */
     @GetMapping("/orderDetail/{id}")
     @ApiOperation("查询订单详情")
@@ -85,11 +85,11 @@ public class OrderController {
     /**
      * 用户取消订单
      *
-     * @return
+     * @return Result<Object>
      */
     @PutMapping("/cancel/{id}")
     @ApiOperation("取消订单")
-    public Result cancel(@PathVariable("id") Long id) throws Exception {
+    public Result<Object> cancel(@PathVariable("id") Long id) throws Exception {
         orderService.userCancelById(id);
         return Result.success();
     }
@@ -98,17 +98,23 @@ public class OrderController {
     /**
      * 再来一单
      *
-     * @param id
-     * @return
+     * @param id Long
+     * @return Result<Object>
      */
     @PostMapping("/repetition/{id}")
     @ApiOperation("再来一单")
-    public Result repetition(@PathVariable Long id) {
+    public Result<Object> repetition(@PathVariable Long id) {
         orderService.repetition(id);
         return Result.success();
     }
 
 
+    @GetMapping("/reminder/{id}")
+    @ApiOperation("客户催单")
+    public Result<Object> reminder(@PathVariable("id") Long id){
+        orderService.reminder(id);
+        return Result.success();
+    }
 
 
 }

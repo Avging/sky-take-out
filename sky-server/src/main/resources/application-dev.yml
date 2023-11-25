@@ -19,4 +19,5 @@ sky:
   wechat:
     appid: wx6950197d4a1368c0
     secret: 96543c26257e08f4826febc068a9eeb4
+    #商户系统地址，也是临时域名：支付成功后微信服务通过该域名回调我们的程序（点击下载好的cpolar安装包，然后输入cpolar.exe http 8080回车，就可以得到）
     notify-url: http://5700e0ac.r9.cpolar.top
