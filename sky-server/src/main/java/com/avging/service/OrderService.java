@@ -115,4 +115,6 @@ public interface OrderService {
      * @param id Long
      */
     void reminder(Long id);
+
+    PageResult conditionSearch(OrdersPageQueryDTO ordersPageQueryDTO);
 }

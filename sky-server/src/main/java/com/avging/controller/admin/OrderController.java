@@ -2,10 +2,12 @@ package com.avging.controller.admin;
 
 import com.avging.dto.OrdersCancelDTO;
 import com.avging.dto.OrdersConfirmDTO;
+import com.avging.dto.OrdersPageQueryDTO;
 import com.avging.dto.OrdersRejectionDTO;
 import com.avging.entity.OrderDetail;
 import com.avging.entity.Orders;
 import com.avging.mapper.OrderDetailMapper;
+import com.avging.result.PageResult;
 import com.avging.result.Result;
 import com.avging.service.OrderService;
 import com.avging.vo.OrderStatisticsVO;
@@ -52,6 +54,19 @@ public class OrderController {
             }
         }
         return orderVOList;
+    }
+
+    /**
+     * 订单搜索
+     *
+     * @param ordersPageQueryDTO
+     * @return
+     */
+    @GetMapping("/conditionSearch")
+    @ApiOperation("订单搜索")
+    public Result<PageResult> conditionSearch(OrdersPageQueryDTO ordersPageQueryDTO) {
+        PageResult pageResult = orderService.conditionSearch(ordersPageQueryDTO);
+        return Result.success(pageResult);
     }
 
 
