@@ -1,10 +1,12 @@
 package com.avging.service.impl;
 
+import com.avging.dto.GoodsSalesDTO;
 import com.avging.entity.Orders;
 import com.avging.mapper.OrderMapper;
 import com.avging.mapper.UserMapper;
 import com.avging.service.ReportService;
 import com.avging.vo.OrderReportVO;
+import com.avging.vo.SalesTop10ReportVO;
 import com.avging.vo.TurnoverReportVO;
 import com.avging.vo.UserReportVO;
 import lombok.extern.slf4j.Slf4j;
@@ -18,6 +20,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -190,5 +193,32 @@ public class ReportServiceImpl implements ReportService {
         map.put("status",status);
 
         return orderMapper.countByMap(map);
+    }
+
+
+
+    /**
+     * 统计指定时间区间内的销量排名前10
+     * @param begin LocalDate
+     * @param end LocalDate
+     * @return SalesTop10ReportVO
+     */
+    public SalesTop10ReportVO getSalesTop10(LocalDate begin, LocalDate end) {
+        LocalDateTime beginTime = LocalDateTime.of(begin, LocalTime.MIN);
+        LocalDateTime endTime = LocalDateTime.of(end, LocalTime.MAX);
+
+        List<GoodsSalesDTO> salesTop10 = orderMapper.getSalesTop10(beginTime, endTime);
+        List<String> names = salesTop10.stream().map(GoodsSalesDTO::getName).collect(Collectors.toList());
+        String nameList = StringUtils.join(names, ",");
+
+        List<Integer> numbers = salesTop10.stream().map(GoodsSalesDTO::getNumber).collect(Collectors.toList());
+        String numberList = StringUtils.join(numbers, ",");
+
+        //封装返回结果数据
+        return SalesTop10ReportVO
+                .builder()
+                .nameList(nameList)
+                .numberList(numberList)
+                .build();
     }
 }

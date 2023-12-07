@@ -1,6 +1,7 @@
 package com.avging.service;
 
 import com.avging.vo.OrderReportVO;
+import com.avging.vo.SalesTop10ReportVO;
 import com.avging.vo.TurnoverReportVO;
 import com.avging.vo.UserReportVO;
 
@@ -31,4 +32,6 @@ public interface ReportService {
      * @return OrderReportVO
      */
     OrderReportVO getOrdersStatistics(LocalDate begin, LocalDate end);
+
+    SalesTop10ReportVO getSalesTop10(LocalDate begin, LocalDate end);
 }

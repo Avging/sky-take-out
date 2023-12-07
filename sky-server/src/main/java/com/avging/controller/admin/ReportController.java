@@ -4,6 +4,7 @@ package com.avging.controller.admin;
 import com.avging.result.Result;
 import com.avging.service.ReportService;
 import com.avging.vo.OrderReportVO;
+import com.avging.vo.SalesTop10ReportVO;
 import com.avging.vo.TurnoverReportVO;
 import com.avging.vo.UserReportVO;
 import io.swagger.annotations.Api;
@@ -51,5 +52,16 @@ public class ReportController {
 
         log.info("订单数据统计：{},{}",begin,end);
         return Result.success(reportService.getOrdersStatistics(begin,end));
+    }
+
+
+
+    @GetMapping("/top10")
+    @ApiOperation("销量排名top10")
+    public Result<SalesTop10ReportVO> top10(
+            @DateTimeFormat(pattern = "yyyy-MM-dd")  LocalDate begin,
+            @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate end){
+        log.info("销量排名top10：{},{}",begin,end);
+        return Result.success(reportService.getSalesTop10(begin,end));
     }
 }

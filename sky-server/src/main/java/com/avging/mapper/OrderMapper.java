@@ -1,5 +1,6 @@
 package com.avging.mapper;
 
+import com.avging.dto.GoodsSalesDTO;
 import com.avging.dto.OrdersPageQueryDTO;
 import com.avging.entity.Orders;
 import com.github.pagehelper.Page;
@@ -80,4 +81,13 @@ public interface OrderMapper {
      * @return Integer
      */
     Integer countByMap(Map map);
+
+
+    /**
+     * 统计指定时间区间内的销量排名前10
+     * @param begin LocalDateTime
+     * @param end LocalDateTime
+     * @return List<GoodsSalesDTO>
+     */
+    List<GoodsSalesDTO> getSalesTop10(LocalDateTime begin, LocalDateTime end);
 }
