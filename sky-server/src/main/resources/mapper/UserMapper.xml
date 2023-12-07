@@ -24,4 +24,17 @@
         order by create_time desc
     </select>
 
+
+    <select id="countByMap" resultType="java.lang.Integer">
+        SELECT count(id) from sky_take_out.user
+        <where>
+            <if test="begin">
+                AND create_time &gt; #{begin}
+            </if>
+            <if test="end">
+                AND create_time &lt; #{end}
+            </if>
+        </where>
+    </select>
+
 </mapper>
