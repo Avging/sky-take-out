@@ -23,35 +23,35 @@ public interface OrderMapper {
 
     /**
      * 根据订单号查询订单
-     * @param orderNumber
+     * @param orderNumber String
      */
     @Select("select * from orders where number = #{orderNumber}")
     Orders getByNumber(String orderNumber);
 
     /**
      * 修改订单信息
-     * @param orders
+     * @param orders Orders
      */
     void update(Orders orders);
 
 
     /**
      * 分页条件查询并按下单时间排序
-     * @param ordersPageQueryDTO
+     * @param ordersPageQueryDTO OrdersPageQueryDTO
      */
     Page<Orders> pageQuery(OrdersPageQueryDTO ordersPageQueryDTO);
 
 
     /**
      * 根据id查询订单
-     * @param id
+     * @param id Long
      */
     @Select("select * from orders where id=#{id}")
     Orders getById(Long id);
 
     /**
      * 根据状态统计订单数量
-     * @param status
+     * @param status Integer
      */
     @Select("select count(id) from orders where status = #{status}")
     Integer countStatus(Integer status);

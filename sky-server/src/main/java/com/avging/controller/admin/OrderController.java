@@ -27,7 +27,7 @@ import java.util.stream.Collectors;
 
 @RestController("adminOrderController")
 @RequestMapping("admin/order")
-@Api(tags = "各个状态的订单数量统计")
+@Api(tags = "订单管理接口")
 @Slf4j
 public class OrderController {
 

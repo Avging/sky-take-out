@@ -385,7 +385,7 @@ public class OrderServiceImpl implements OrderService{
 
 
     /**
-     * 各个状态的订单数量统计
+     * 各个状态的订单数量统计 OrderStatisticsVO
      *
      * @return
      */
