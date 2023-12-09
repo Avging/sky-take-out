@@ -5,6 +5,7 @@ import com.avging.vo.SalesTop10ReportVO;
 import com.avging.vo.TurnoverReportVO;
 import com.avging.vo.UserReportVO;
 
+import javax.servlet.http.HttpServletResponse;
 import java.time.LocalDate;
 
 public interface ReportService {
@@ -34,4 +35,11 @@ public interface ReportService {
     OrderReportVO getOrdersStatistics(LocalDate begin, LocalDate end);
 
     SalesTop10ReportVO getSalesTop10(LocalDate begin, LocalDate end);
+
+
+    /**
+     * 导出运营数据报表
+     * @param response HttpServletResponse
+     */
+    void exportBusinessData(HttpServletResponse response);
 }
